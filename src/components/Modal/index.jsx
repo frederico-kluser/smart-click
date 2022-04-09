@@ -15,7 +15,15 @@ const dragOptions = {
 };
 const screenReaderOnly = mergeStyles(hiddenContentStyle);
 
-export const DialogBasicExample = ({ title, subText, confirmText = "Ok", closeText = "Cancell" }) => {
+export const Modal = ({ 
+    title,
+    subText,
+    confirmText = "Ok",
+    show,
+    confirmFunction,
+    cancellText = "Cancell",
+    cancellFunction,
+  }) => {
   const dialogContentProps = {
     type: DialogType.normal,
     title,
@@ -23,39 +31,16 @@ export const DialogBasicExample = ({ title, subText, confirmText = "Ok", closeTe
     subText,
   };
 
-  const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
-  const labelId = useId('dialogLabel');
-  const subTextId = useId('subTextLabel');
-
-  const modalProps = React.useMemo(
-    () => ({
-      titleAriaId: labelId,
-      subtitleAriaId: subTextId,
-      isBlocking: false,
-      styles: dialogStyles,
-    }),
-    [labelId, subTextId],
-  );
-
   return (
     <>
-      <DefaultButton secondaryText="Opens the Sample Dialog" onClick={toggleHideDialog} text="Open Dialog" />
-      <label id={labelId} className={screenReaderOnly}>
-        My sample label
-      </label>
-      <label id={subTextId} className={screenReaderOnly}>
-        My sample description
-      </label>
-
       <Dialog
-        hidden={hideDialog}
-        onDismiss={toggleHideDialog}
+        hidden={!show}
+        onDismiss={cancellFunction}
         dialogContentProps={dialogContentProps}
-        modalProps={modalProps}
       >
         <DialogFooter>
-          <PrimaryButton onClick={toggleHideDialog} text={confirmText} />
-          <DefaultButton onClick={toggleHideDialog} text={closeText} />
+          <PrimaryButton onClick={confirmFunction} text={confirmText} />
+          <DefaultButton onClick={cancellFunction} text={cancellText} />
         </DialogFooter>
       </Dialog>
     </>
