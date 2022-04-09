@@ -8,19 +8,17 @@ async function checkUpdate(macros, setMacros, setLoaded) {
   await new Promise((resolve) => fetch('http://localhost:8080/macro/allMacros')
   .then(response => response.json())
   .then(({ data }) => {
-    if (!compareObject(macros, data)) {
-      setMacros(data);
-      setLoaded(true);
-      resolve();
-    }
+    setMacros(data);
+    setLoaded(true);
+    resolve();
   }))
-  
+
   while (true) {
     await new Promise((resolve) => setTimeout(resolve, 100));
     await new Promise((resolve) => fetch('http://localhost:8080/macro/allMacros')
     .then(response => response.json())
     .then(({ data }) => {
-      if (!compareObject(macros, data)) {
+      if (!data.length || !compareObject(macros, data)) {
         setMacros(data);
       }
       resolve();

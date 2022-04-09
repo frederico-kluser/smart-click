@@ -39,7 +39,12 @@ const General = `
   width: 10%;
 `;
 
-export const Command = styled.div`${General}`;
+export const Command = styled.div`
+  ${General}
+  background: ${({ actived }) => actived ? '#00C853' : '#FFFFFF'};
+  color: ${({ actived }) => actived ? '#FFF' : '#212121'};
+  font-size: 20px;
+`;
 
 export const Name = styled.div`
   ${clickEffect}
