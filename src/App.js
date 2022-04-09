@@ -2,6 +2,7 @@ import { Spinner, SpinnerSize, Text } from '@fluentui/react';
 import { useEffect, useState } from 'react';
 import { Body, Loader } from './App.styled';
 import { Modal } from './components/Modal';
+import BlocklyEditor from './pages/Blockly';
 import Macros from './pages/Macros';
 import { compareObject } from './utils/general';
 
@@ -62,7 +63,8 @@ function App() {
 					<Spinner size={SpinnerSize.large} label="Loading Macros..." />
 				</Loader>
 			)}
-			{loaded && <Macros data={macros} setModalConfig={setModalConfig} />}
+			{/* {loaded && <Macros data={macros} setModalConfig={setModalConfig} />} */}
+			{loaded && <BlocklyEditor />}
 			<Modal {...modalConfig} />
 		</Body>
 	);
