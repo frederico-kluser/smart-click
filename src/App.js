@@ -1,6 +1,7 @@
 import { Spinner, SpinnerSize, Text } from '@fluentui/react';
 import { useEffect, useState } from 'react';
 import { Body, Loader } from './App.styled';
+import { DialogBasicExample } from './components/Modal';
 import Macros from './pages/Macros';
 import { compareObject } from './utils/general';
 
@@ -47,6 +48,7 @@ function App() {
         <Spinner size={SpinnerSize.large} label="Loading Macros..." />
       </Loader>}
       { loaded && <Macros data={macros} /> }
+      <DialogBasicExample title="Deletar Macro" subText="Voce quer mesmo deletar esse macro ?" />
     </Body>
   );
 }
