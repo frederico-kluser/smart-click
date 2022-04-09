@@ -1,14 +1,16 @@
-import { Link, Text } from '@fluentui/react';
+import { Spinner, SpinnerSize, Text } from '@fluentui/react';
+import { Body, Loader } from './App.styled';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Text variant="mega">
-          Smart-Click
-        </Text>
-      </header>
-    </div>
+    <Body>
+      <Text variant="xxLarge">
+        Smart-Click
+        <Loader>
+          <Spinner size={SpinnerSize.large} label="Loading Macros..." />
+        </Loader>
+      </Text>
+    </Body>
   );
 }
 
