@@ -4,7 +4,7 @@ import MacroItem from '../../components/MacroItem';
 import Container from './styled';
 
 const Macros = ({ data }) => <>
-  { data.map(({ name }) => <MacroItem name={ name } /> )}
+  { data.map((data) => <MacroItem {...data} /> )}
   <PrimaryButton text="Add Macro" />
 </>
 

@@ -1,5 +1,5 @@
 import { Spinner, SpinnerSize, Text } from '@fluentui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Body, Loader } from './App.styled';
 import Macros from './pages/Macros';
 import { compareObject } from './utils/general';
@@ -8,9 +8,11 @@ async function checkUpdate(macros, setMacros, setLoaded) {
   await new Promise((resolve) => fetch('http://localhost:8080/macro/allMacros')
   .then(response => response.json())
   .then(({ data }) => {
-    setMacros(data);
-    setLoaded(true);
-    resolve();
+    if (!compareObject(macros, data)) {
+      setMacros(data);
+      setLoaded(true);
+      resolve();
+    }
   }))
   
   while (true) {
@@ -29,7 +31,10 @@ async function checkUpdate(macros, setMacros, setLoaded) {
 function App() {
   const [loaded, setLoaded] = useState(false);
   const [macros, setMacros] = useState([]);
-  checkUpdate(macros, setMacros, setLoaded);
+
+  useEffect(() => {
+    checkUpdate(macros, setMacros, setLoaded);
+  }, []);
 
   return (
     <Body>
