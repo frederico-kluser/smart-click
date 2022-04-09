@@ -5,10 +5,21 @@ const heightStyle = `
   line-height: 50px;
 `;
 
+const clickEffect = ` 
+transition: all 0.2s ease-in-out;
+
+&:hover {
+  background: #F5F5F5;
+}
+
+&:active {
+  background: #E0E0E0;
+}
+`;
+
 const borderStyle = '1px solid #212121';
 
 const Container = styled.div`
-  ${heightStyle}
   background: #FFFFFF;
   border: ${borderStyle};
   border-radius: 4px;
@@ -18,20 +29,20 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* align vertical / */
-  /* justify-content: center; */
 `;
 
 const General = `
+  ${clickEffect}
   ${heightStyle}
   border-right: ${borderStyle};
   text-align: center;
   width: 10%;
 `;
 
-export const Number = styled.div`${General}`;
+export const Command = styled.div`${General}`;
 
 export const Name = styled.div`
+  ${clickEffect}
   ${heightStyle}
   border-right: ${borderStyle};
   padding-left: 16px;
@@ -40,7 +51,8 @@ export const Name = styled.div`
 
 export const Edit = styled.div`${General}`;
 
-export const Delete = styled.div`${General}
+export const Delete = styled.div`
+  ${General}
   border-right: none;
 `;
 
