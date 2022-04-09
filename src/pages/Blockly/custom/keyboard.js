@@ -1,4 +1,6 @@
-const Blockly = require('blockly');
+import * as Blockly from 'blockly/core';
+import 'blockly/blocks';
+import 'blockly/python';
 
 // keyboard type variable interval
 (() => {

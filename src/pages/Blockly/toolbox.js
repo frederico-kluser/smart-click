@@ -1,5 +1,6 @@
-const Blockly = require('blockly');
-Blockly.Python = Blockly.Python || {}; 
+import * as Blockly from 'blockly/core';
+import 'blockly/blocks';
+import 'blockly/python';
 
 require('./custom/mouse');
 require('./custom/time');
@@ -234,4 +235,4 @@ const toolbox = {
   ],
 };
 
-module.exports = toolbox;
+export default toolbox;

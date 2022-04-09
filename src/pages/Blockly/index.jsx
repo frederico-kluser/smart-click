@@ -1,21 +1,30 @@
-import { KeyCodes } from '@fluentui/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { BlocklyWorkspace } from 'react-blockly';
 import Container from './styled';
 import toolbox from './toolbox';
 
-const BlocklyEditor = () => {
-  const [xml, setXml] = useState();
+import * as Blockly from 'blockly/core';
+import 'blockly/blocks';
+import 'blockly/python';
+
+import { useBlocklyWorkspace } from 'react-blockly';
+
+function BlocklyEditor() {
+  const blocklyRef = useRef(null);
+  const { workspace, xml } = useBlocklyWorkspace({
+    ref: blocklyRef,
+    toolboxConfiguration: toolbox, // this must be a JSON toolbox definition
+    initialXml: '',
+  });
+
+  console.log('workspace :', workspace);
+  console.log('xml :', xml);
+  if (xml) {
+    console.log(Blockly.Python.workspaceToCode(workspace));
+  }
 
   return (
-    <Container>
-      <BlocklyWorkspace
-        className="width-100" // you can use whatever classes are appropriate for your app's CSS
-        toolboxConfiguration={toolbox} // this must be a JSON toolbox definition
-        initialXml={xml}
-        onXmlChange={setXml}
-      />
-    </Container>
+    <Container ref={blocklyRef} /> // Blockly will be injected here
   )
 }
 
