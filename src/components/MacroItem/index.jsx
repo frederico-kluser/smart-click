@@ -15,7 +15,7 @@ const MacroItem = ({ _id, actived, name, setModalConfig }) => {
 		})
 			.then((response) => response.json())
 			.then(({ data }) => {
-				console.log(data);
+				// console.log(data);
 			});
 	};
 
@@ -36,7 +36,7 @@ const MacroItem = ({ _id, actived, name, setModalConfig }) => {
 				})
 					.then((response) => response.json())
 					.then(({ data }) => {
-						console.log(data);
+						// console.log(data);
 					});
 				setModalConfig((prevState) => ({ ...prevState, show: false }));
 			},

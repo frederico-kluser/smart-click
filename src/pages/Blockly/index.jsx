@@ -8,6 +8,7 @@ import 'blockly/blocks';
 import 'blockly/python';
 
 import { useBlocklyWorkspace } from 'react-blockly';
+import { codeFixer } from './fixCode';
 
 function BlocklyEditor() {
   const blocklyRef = useRef(null);
@@ -17,10 +18,12 @@ function BlocklyEditor() {
     initialXml: '',
   });
 
-  console.log('workspace :', workspace);
-  console.log('xml :', xml);
+  // console.log('workspace :', workspace);
+  // console.log('xml :', xml);
   if (xml) {
-    console.log(Blockly.Python.workspaceToCode(workspace));
+    const code = codeFixer(Blockly.Python.workspaceToCode(workspace));
+    console.log(code);
+    // console.log('code :', code);
   }
 
   return (
