@@ -35,6 +35,7 @@ async function checkUpdate(macros, setMacros, setLoaded) {
 function App() {
 	const [loaded, setLoaded] = useState(false);
 	const [macros, setMacros] = useState([]);
+	const [screen, setScreen] = useState("useMacro");
 
 	const [modalConfig, setModalConfig] = useState({
 		title: 'Modal Title',
@@ -63,8 +64,8 @@ function App() {
 					<Spinner size={SpinnerSize.large} label="Loading Macros..." />
 				</Loader>
 			)}
-			{/* {loaded && <Macros data={macros} setModalConfig={setModalConfig} />} */}
-			{loaded && <BlocklyEditor />}
+			{(loaded && screen === "useMacro") && <Macros data={macros} setModalConfig={setModalConfig} setScreen={setScreen} />}
+			{(loaded && screen === "createMacro") && <BlocklyEditor />}
 			<Modal {...modalConfig} />
 		</Body>
 	);
