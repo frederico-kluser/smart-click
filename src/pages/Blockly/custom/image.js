@@ -152,7 +152,7 @@ import 'blockly/python';
 (() => {
   Blockly.Blocks.screen_gext_number_from_area = {
     init() {
-      this.appendDummyInput().appendField('get text from area');
+      this.appendDummyInput().appendField('get number from area');
       this.appendDummyInput()
         .appendField('x1:')
         .appendField(new Blockly.FieldNumber(0, 0), 'fromX')
