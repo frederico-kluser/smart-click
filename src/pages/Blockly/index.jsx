@@ -1,6 +1,5 @@
-import { useRef, useState } from 'react';
-import { BlocklyWorkspace } from 'react-blockly';
-import Container from './styled';
+import { useRef } from 'react';
+import Container, { ButtonGroup } from './styled';
 import toolbox from './toolbox';
 
 import * as Blockly from 'blockly/core';
@@ -9,8 +8,9 @@ import 'blockly/python';
 
 import { useBlocklyWorkspace } from 'react-blockly';
 import { codeFixer } from './fixCode';
+import { DefaultButton, PrimaryButton } from '@fluentui/react';
 
-function BlocklyEditor() {
+const BlocklyEditor = ({ setModalConfig, setScreen }) => {
   const blocklyRef = useRef(null);
   const { workspace, xml } = useBlocklyWorkspace({
     ref: blocklyRef,
@@ -18,16 +18,23 @@ function BlocklyEditor() {
     initialXml: '',
   });
 
-  // console.log('workspace :', workspace);
-  // console.log('xml :', xml);
   if (xml) {
     const code = codeFixer(Blockly.Python.workspaceToCode(workspace));
-    console.log(code);
-    // console.log('code :', code);
+    // console.log(code);
+  }
+
+  const cancellFunction = () => {
+    setScreen('useMacro');
   }
 
   return (
-    <Container ref={blocklyRef} /> // Blockly will be injected here
+    <>
+      <Container ref={blocklyRef} />
+      <ButtonGroup>
+        <PrimaryButton text="Save" onClick={() => {}} />
+        <DefaultButton text="Cancell" style={{ marginLeft: 15 }} onClick={cancellFunction} />
+      </ButtonGroup>
+    </>
   )
 }
 

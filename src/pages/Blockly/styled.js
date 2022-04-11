@@ -10,4 +10,10 @@ const Container = styled.div`
   }
 `;
 
+export const ButtonGroup = styled.div`
+  width: auto;
+  margin-top: 15px;
+`;
+
+
 export default Container;
