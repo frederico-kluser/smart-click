@@ -15,14 +15,22 @@ const dragOptions = {
 };
 const screenReaderOnly = mergeStyles(hiddenContentStyle);
 
+export const modalDefaultConfig = {
+	cancellText: 'Cancell',
+	confirmText: 'Ok',
+	show: false,
+	subText: 'Modal SubText',
+	title: 'Modal Title',
+}
+
 export const Modal = ({ 
-    title,
-    subText,
-    confirmText = "Ok",
-    show,
-    confirmFunction,
-    cancellText = "Cancell",
     cancellFunction,
+    cancellText,
+    confirmFunction,
+    confirmText,
+    show,
+    subText,
+    title,
   }) => {
   const dialogContentProps = {
     type: DialogType.normal,

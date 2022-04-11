@@ -9,8 +9,9 @@ import 'blockly/python';
 import { useBlocklyWorkspace } from 'react-blockly';
 import { codeFixer } from './fixCode';
 import { DefaultButton, PrimaryButton } from '@fluentui/react';
+import eventEmitter from '../../utils/event';
 
-const BlocklyEditor = ({ setModalConfig, setScreen }) => {
+const BlocklyEditor = () => {
   const blocklyRef = useRef(null);
   const { workspace, xml } = useBlocklyWorkspace({
     ref: blocklyRef,
@@ -24,7 +25,7 @@ const BlocklyEditor = ({ setModalConfig, setScreen }) => {
   }
 
   const cancellFunction = () => {
-    setScreen('useMacro');
+    eventEmitter.emit('changePage', 'useMacro');
   }
 
   return (
