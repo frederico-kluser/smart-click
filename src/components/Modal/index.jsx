@@ -16,18 +16,14 @@ const dragOptions = {
 const screenReaderOnly = mergeStyles(hiddenContentStyle);
 
 export const modalDefaultConfig = {
-	cancellText: 'Cancell',
+  cancellFunction: () => {},
+  cancellText: 'Cancell',
+  confirmFunction: () => {},
 	confirmText: 'Ok',
 	show: false,
 	subText: 'Modal SubText',
 	title: 'Modal Title',
 }
-
-let confirmAction = () => {};
-export const confirmActionGetter = () => confirmAction;
-export const confirmActionSetter = (value) => {
-  confirmAction = value;
-};
 
 export const Modal = ({ 
     cancellFunction,

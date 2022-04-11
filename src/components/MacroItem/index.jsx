@@ -23,7 +23,7 @@ const MacroItem = ({ _id, actived, name }) => {
 
 	const deleteMacro = () => {
 		eventEmitter.emit('openModal', {
-			func: () => {
+			confirmFunction: () => {
 				deleteMacroById(_id).then(() => {
 					eventEmitter.emit('closeModal');
 				})
@@ -34,7 +34,7 @@ const MacroItem = ({ _id, actived, name }) => {
 	};
 
 	const editMacro = () => {
-		eventEmitter.emit('openModal');
+		eventEmitter.emit('openModal', {});
 	};
 
 	return (

@@ -2,7 +2,7 @@ import { Spinner, SpinnerSize, Text } from '@fluentui/react';
 import { useEffect, useState } from 'react';
 import checkUpdate from './api/checkUpdate';
 import { Body, Loader } from './App.styled';
-import { confirmActionGetter, confirmActionSetter, Modal, modalDefaultConfig } from './components/Modal';
+import { Modal, modalDefaultConfig } from './components/Modal';
 import BlocklyEditor from './pages/Blockly';
 import Macros from './pages/Macros';
 import eventEmitter from './utils/event';
@@ -14,20 +14,7 @@ function App() {
 	const [macros, setMacros] = useState([]);
 	const [screen, setScreen] = useState("useMacro");
 
-	const [modalConfig, setModalConfig] = useState({
-		...modalDefaultConfig,
-		openModal: () => {
-			setModalConfig((prevState) => ({ ...prevState, show: true }));
-		},
-		confirmFunction: () => {
-			setModalConfig((prevState) => ({ ...prevState, show: false }));
-			const confirmAction = confirmActionGetter();
-			confirmAction();
-		},
-		cancellFunction: () => {
-			setModalConfig((prevState) => ({ ...prevState, show: false }));
-		},
-	});
+	const [modalConfig, setModalConfig] = useState(modalDefaultConfig);
 
 	useEffect(() => {
 		checkUpdate(macros, setMacros, setLoaded);
@@ -35,20 +22,28 @@ function App() {
 		//Assign the event handler to an event:
 		eventEmitter.on('openModal', ({ 
 			cancellText = modalDefaultConfig.cancellText,
+			cancellFunction = modalDefaultConfig.cancellFunction,
 			confirmText = modalDefaultConfig.confirmText,
-			func = () => {},
+			confirmFunction = modalDefaultConfig.confirmFunction,
 			subText = modalDefaultConfig.subText,
 			title = modalDefaultConfig.title,
 		}) => {
 			setModalConfig((prevState) => ({ 
 				...prevState,
+				cancellFunction: () => {
+					cancellFunction();
+					setModalConfig((prevState) => ({ ...prevState, show: false }));
+				},
 				cancellText,
+				confirmFunction: () => {
+					confirmFunction();
+					setModalConfig((prevState) => ({ ...prevState, show: false }));
+				},
 				confirmText,
 				show: true,
 				subText,
 				title,
 			}));
-			confirmActionSetter(func);
 		});
 		
 		eventEmitter.on('closeModal', () => {
@@ -58,9 +53,6 @@ function App() {
 		eventEmitter.on('changePage', (page) => {
 			setScreen(page);
 		});
-
-		//Fire the 'scream' event:
-		// eventEmitter.emit('scream');
 	}, []);
 
 	return (
