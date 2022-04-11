@@ -1,36 +1,10 @@
 import { Spinner, SpinnerSize, Text } from '@fluentui/react';
 import { useEffect, useState } from 'react';
+import checkUpdate from './api/checkUpdate';
 import { Body, Loader } from './App.styled';
 import { Modal } from './components/Modal';
 import BlocklyEditor from './pages/Blockly';
 import Macros from './pages/Macros';
-import { compareObject } from './utils/general';
-
-async function checkUpdate(macros, setMacros, setLoaded) {
-	await new Promise((resolve) =>
-		fetch('http://localhost:8080/macro/allMacros')
-			.then((response) => response.json())
-			.then(({ data }) => {
-				setMacros(data);
-				setLoaded(true);
-				resolve();
-			}),
-	);
-
-	while (true) {
-		await new Promise((resolve) => setTimeout(resolve, 100));
-		await new Promise((resolve) =>
-			fetch('http://localhost:8080/macro/allMacros')
-				.then((response) => response.json())
-				.then(({ data }) => {
-					if (!data.length || !compareObject(macros, data)) {
-						setMacros(data);
-					}
-					resolve();
-				}),
-		);
-	}
-}
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
@@ -51,6 +25,8 @@ function App() {
 		},
 	});
 
+	
+
 	useEffect(() => {
 		checkUpdate(macros, setMacros, setLoaded);
 	}, []);
@@ -65,7 +41,7 @@ function App() {
 				</Loader>
 			)}
 			{(loaded && screen === "useMacro") && <Macros data={macros} setModalConfig={setModalConfig} setScreen={setScreen} />}
-			{(loaded && screen === "createMacro") && <BlocklyEditor />}
+			{(loaded && screen === "createMacro") && <BlocklyEditor setModalConfig={setModalConfig} setScreen={setScreen} />}
 			<Modal {...modalConfig} />
 		</Body>
 	);
