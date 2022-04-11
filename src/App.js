@@ -33,8 +33,21 @@ function App() {
 		checkUpdate(macros, setMacros, setLoaded);
 
 		//Assign the event handler to an event:
-		eventEmitter.on('openModal', (func = () => {}) => {
-			setModalConfig((prevState) => ({ ...prevState, show: true }));
+		eventEmitter.on('openModal', ({ 
+			cancellText = modalDefaultConfig.cancellText,
+			confirmText = modalDefaultConfig.confirmText,
+			func = () => {},
+			subText = modalDefaultConfig.subText,
+			title = modalDefaultConfig.title,
+		}) => {
+			setModalConfig((prevState) => ({ 
+				...prevState,
+				cancellText,
+				confirmText,
+				show: true,
+				subText,
+				title,
+			}));
 			confirmActionSetter(func);
 		});
 		

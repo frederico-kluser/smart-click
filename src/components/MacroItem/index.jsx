@@ -22,10 +22,14 @@ const MacroItem = ({ _id, actived, name }) => {
 	};
 
 	const deleteMacro = () => {
-		eventEmitter.emit('openModal', () => {
-			deleteMacroById(_id).then(() => {
-				eventEmitter.emit('closeModal');
-			})
+		eventEmitter.emit('openModal', {
+			func: () => {
+				deleteMacroById(_id).then(() => {
+					eventEmitter.emit('closeModal');
+				})
+			},
+			title: `Delete macro ${name}`,
+			subText: 'Are you sure to delete this macro?',
 		});
 	};
 
