@@ -23,6 +23,12 @@ export const modalDefaultConfig = {
 	title: 'Modal Title',
 }
 
+let confirmAction = () => {};
+export const confirmActionGetter = () => confirmAction;
+export const confirmActionSetter = (value) => {
+  confirmAction = value;
+};
+
 export const Modal = ({ 
     cancellFunction,
     cancellText,

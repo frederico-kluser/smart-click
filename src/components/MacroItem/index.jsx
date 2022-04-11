@@ -22,13 +22,11 @@ const MacroItem = ({ _id, actived, name }) => {
 	};
 
 	const deleteMacro = () => {
-		eventEmitter.emit('openModal');
-
-		/*
-		deleteMacroById(_id).then(() => {
-			eventEmitter.emit('closeModal');
-		})
-		*/
+		eventEmitter.emit('openModal', () => {
+			deleteMacroById(_id).then(() => {
+				eventEmitter.emit('closeModal');
+			})
+		});
 	};
 
 	const editMacro = () => {
