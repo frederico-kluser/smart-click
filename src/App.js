@@ -20,7 +20,7 @@ function App() {
 		//Assign the event handler to an event:
 		eventEmitter.on('openModal', (properties) => {
 			const { cancellText, cancellFunction, confirmText, confirmFunction, subText, title, type } =
-				modalPropertyFixer(properties);
+			properties = modalPropertyFixer(properties);
 
 			setModalConfig((prevState) => ({
 				...prevState,

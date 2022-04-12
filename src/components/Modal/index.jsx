@@ -19,15 +19,18 @@ const types = {
   input: 'input',
 }
 
-export const modalPropertyFixer = (properties) => ({ 
-  cancellText: properties.cancellText || modalDefaultConfig.cancellText,
-  cancellFunction: properties.cancellFunction || modalDefaultConfig.cancellFunction,
-  confirmText: properties.confirmText || modalDefaultConfig.confirmText,
-  confirmFunction: properties.confirmFunction || modalDefaultConfig.confirmFunction,
-  subText: properties.subText || modalDefaultConfig.subText,
-  title: properties.title || modalDefaultConfig.title,
-  type: properties.type || modalDefaultConfig.type,
-});
+// create a automization of replace properties ignoring the 'show' property
+export const modalPropertyFixer = (properties) => {
+  const fixedObject = {};
+
+  Object.keys(modalDefaultConfig).forEach((property) => {
+    if (property !== 'show') {
+      fixedObject[property] = properties[property] || modalDefaultConfig[property];
+    }
+  });
+
+  return fixedObject;
+};
 
 export const Modal = ({ 
     cancellFunction,
