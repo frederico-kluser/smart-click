@@ -19,7 +19,7 @@ function App() {
 
 		//Assign the event handler to an event:
 		eventEmitter.on('openModal', (properties) => {
-			const { cancellText, cancellFunction, confirmText, confirmFunction, subText, title, type } =
+			const { cancellText, cancellFunction, confirmText, confirmFunction, placeholder, subText, title, type } =
 			properties = modalPropertyFixer(properties);
 
 			setModalConfig((prevState) => ({
@@ -34,14 +34,18 @@ function App() {
 					setModalConfig((prevState) => ({ ...prevState, show: false }));
 				},
 				confirmText,
+				placeholder,
 				show: true,
 				subText,
 				title,
-				type,
+				type
 			}));
 		});
 
 		eventEmitter.on('closeModal', () => {
+			setModalConfig((prevState) => ({ ...prevState, show: false }));
+		});
+		eventEmitter.on('conformModal', () => {
 			setModalConfig((prevState) => ({ ...prevState, show: false }));
 		});
 

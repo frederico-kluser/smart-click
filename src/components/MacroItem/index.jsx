@@ -4,6 +4,7 @@ import { Icon } from '@fluentui/react/lib/Icon';
 import { Text } from '@fluentui/react';
 import eventEmitter from '../../utils/event';
 import deleteMacroById from '../../api/deleteMacro';
+import { modalAlert, modalPrompt } from '../Modal';
 
 const MacroItem = ({ _id, actived, name }) => {
 	const switchActived = () => {
@@ -22,11 +23,9 @@ const MacroItem = ({ _id, actived, name }) => {
 	};
 
 	const deleteMacro = () => {
-		eventEmitter.emit('openModal', {
+		modalAlert({
 			confirmFunction: () => {
-				deleteMacroById(_id).then(() => {
-					eventEmitter.emit('closeModal');
-				})
+				deleteMacroById(_id);
 			},
 			title: `Delete macro ${name}`,
 			subText: 'Are you sure to delete this macro?',
@@ -34,7 +33,11 @@ const MacroItem = ({ _id, actived, name }) => {
 	};
 
 	const editMacro = () => {
-		eventEmitter.emit('openModal', { type: 'input' });
+		modalPrompt({
+			title: `Edit macro ${name}`,
+			subText: 'Enter new name',
+			placeholder: name
+		});
 	};
 
 	return (
