@@ -1,19 +1,7 @@
 import * as React from 'react';
 import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
 import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
-import { hiddenContentStyle, mergeStyles } from '@fluentui/react/lib/Styling';
-import { Toggle } from '@fluentui/react/lib/Toggle';
-import { ContextualMenu } from '@fluentui/react/lib/ContextualMenu';
-import { useId, useBoolean } from '@fluentui/react-hooks';
-
-const dialogStyles = { main: { maxWidth: 450 } };
-const dragOptions = {
-  moveMenuItemText: 'Move',
-  closeMenuItemText: 'Close',
-  menu: ContextualMenu,
-  keepInBounds: true,
-};
-const screenReaderOnly = mergeStyles(hiddenContentStyle);
+import { TextField } from '@fluentui/react';
 
 export const modalDefaultConfig = {
   cancellFunction: () => {},
@@ -23,7 +11,23 @@ export const modalDefaultConfig = {
 	show: false,
 	subText: 'Modal SubText',
 	title: 'Modal Title',
+  type: 'default',
 }
+
+const types = {
+  default: 'default',
+  input: 'input',
+}
+
+export const modalPropertyFixer = (properties) => ({ 
+  cancellText: properties.cancellText || modalDefaultConfig.cancellText,
+  cancellFunction: properties.cancellFunction || modalDefaultConfig.cancellFunction,
+  confirmText: properties.confirmText || modalDefaultConfig.confirmText,
+  confirmFunction: properties.confirmFunction || modalDefaultConfig.confirmFunction,
+  subText: properties.subText || modalDefaultConfig.subText,
+  title: properties.title || modalDefaultConfig.title,
+  type: properties.type || modalDefaultConfig.type,
+});
 
 export const Modal = ({ 
     cancellFunction,
@@ -33,6 +37,7 @@ export const Modal = ({
     show,
     subText,
     title,
+    type,
   }) => {
   const dialogContentProps = {
     type: DialogType.normal,
@@ -41,6 +46,10 @@ export const Modal = ({
     subText,
   };
 
+  if (type === types.input) {
+    delete dialogContentProps.subText;
+  }
+
   return (
     <>
       <Dialog
@@ -48,6 +57,7 @@ export const Modal = ({
         onDismiss={cancellFunction}
         dialogContentProps={dialogContentProps}
       >
+        { type === types.input && <TextField placeholder="Macro Name" /> }
         <DialogFooter>
           <PrimaryButton onClick={confirmFunction} text={confirmText} />
           <DefaultButton onClick={cancellFunction} text={cancellText} />

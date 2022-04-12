@@ -2,17 +2,15 @@ import { Spinner, SpinnerSize, Text } from '@fluentui/react';
 import { useEffect, useState } from 'react';
 import checkUpdate from './api/checkUpdate';
 import { Body, Loader } from './App.styled';
-import { Modal, modalDefaultConfig } from './components/Modal';
+import { Modal, modalDefaultConfig, modalPropertyFixer } from './components/Modal';
 import BlocklyEditor from './pages/Blockly';
 import Macros from './pages/Macros';
 import eventEmitter from './utils/event';
 
-let confirmAction = () => {};
-
 function App() {
 	const [loaded, setLoaded] = useState(false);
 	const [macros, setMacros] = useState([]);
-	const [screen, setScreen] = useState("useMacro");
+	const [screen, setScreen] = useState('useMacro');
 
 	const [modalConfig, setModalConfig] = useState(modalDefaultConfig);
 
@@ -20,15 +18,11 @@ function App() {
 		checkUpdate(macros, setMacros, setLoaded);
 
 		//Assign the event handler to an event:
-		eventEmitter.on('openModal', ({ 
-			cancellText = modalDefaultConfig.cancellText,
-			cancellFunction = modalDefaultConfig.cancellFunction,
-			confirmText = modalDefaultConfig.confirmText,
-			confirmFunction = modalDefaultConfig.confirmFunction,
-			subText = modalDefaultConfig.subText,
-			title = modalDefaultConfig.title,
-		}) => {
-			setModalConfig((prevState) => ({ 
+		eventEmitter.on('openModal', (properties) => {
+			const { cancellText, cancellFunction, confirmText, confirmFunction, subText, title, type } =
+				modalPropertyFixer(properties);
+
+			setModalConfig((prevState) => ({
 				...prevState,
 				cancellFunction: () => {
 					cancellFunction();
@@ -43,9 +37,10 @@ function App() {
 				show: true,
 				subText,
 				title,
+				type,
 			}));
 		});
-		
+
 		eventEmitter.on('closeModal', () => {
 			setModalConfig((prevState) => ({ ...prevState, show: false }));
 		});
@@ -64,8 +59,8 @@ function App() {
 					<Spinner size={SpinnerSize.large} label="Loading Macros..." />
 				</Loader>
 			)}
-			{(loaded && screen === "useMacro") && <Macros data={macros} />}
-			{(loaded && screen === "createMacro") && <BlocklyEditor />}
+			{loaded && screen === 'useMacro' && <Macros data={macros} />}
+			{loaded && screen === 'createMacro' && <BlocklyEditor />}
 			<Modal {...modalConfig} />
 		</Body>
 	);

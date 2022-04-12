@@ -34,7 +34,7 @@ const MacroItem = ({ _id, actived, name }) => {
 	};
 
 	const editMacro = () => {
-		eventEmitter.emit('openModal', {});
+		eventEmitter.emit('openModal', { type: 'input' });
 	};
 
 	return (
