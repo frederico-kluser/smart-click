@@ -65,7 +65,7 @@ function App() {
 			)}
 			{loaded && screen === 'useMacro' && <Macros data={macros} />}
 			{loaded && screen === 'createMacro' && <BlocklyEditor />}
-			<Modal {...modalConfig} />
+			{ modalConfig.show && <Modal {...modalConfig} /> }
 		</Body>
 	);
 }
