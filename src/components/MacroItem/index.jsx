@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Container, { Delete, Edit, Name, Command } from './styled';
 import { Icon } from '@fluentui/react/lib/Icon';
 import { Text } from '@fluentui/react';
-import eventEmitter from '../../utils/event';
 import deleteMacroById from '../../api/deleteMacro';
 import { modalAlert, modalPrompt } from '../Modal';
 
@@ -32,12 +31,14 @@ const MacroItem = ({ _id, actived, name }) => {
 		});
 	};
 
-	const editMacro = () => {
-		modalPrompt({
+	const editMacro = async () => {
+		const result = await modalPrompt({
 			title: `Edit macro ${name}`,
 			subText: 'Enter new name',
 			placeholder: name
 		});
+
+		alert(result);
 	};
 
 	return (
