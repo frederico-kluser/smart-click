@@ -18,6 +18,7 @@
   "main": "public/electron.js",
   "scripts": {
     "start": "react-scripts start",
+    "start-server": "cd ../smart-click-server/ && npm start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
