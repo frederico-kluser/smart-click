@@ -6,8 +6,8 @@ fetch(url)
   }),
 );
 
-export const del = (url, id) => new Promise((resolve) =>
-fetch(`http://localhost:8080/macro/delete/?id=${id}`, {
+export const del = (url) => new Promise((resolve) =>
+fetch(url, {
   method: 'DELETE',
   mode: 'cors',
   headers: {
@@ -19,3 +19,18 @@ fetch(`http://localhost:8080/macro/delete/?id=${id}`, {
     resolve(data);
   }),
 );
+
+export const put = (url, actived) => new Promise((resolve, reject) => {
+  fetch(url, {
+			method: 'PUT',
+			body: JSON.stringify({ actived: !actived }),
+			mode: 'cors',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((response) => response.json())
+			.then(({ data }) => {
+        resolve(data);
+			});
+});

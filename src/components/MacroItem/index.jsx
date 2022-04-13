@@ -4,21 +4,12 @@ import { Icon } from '@fluentui/react/lib/Icon';
 import { Text } from '@fluentui/react';
 import deleteMacroById from '../../api/deleteMacro';
 import { modalAlert, modalPrompt } from '../Modal';
+import { put } from '../../api/crud';
+import { switchMacroActived } from '../../api/urls';
 
 const MacroItem = ({ _id, actived, name }) => {
 	const switchActived = () => {
-		fetch(`http://localhost:8080/macro/switchActived/?id=${_id}`, {
-			method: 'PUT',
-			body: JSON.stringify({ actived: !actived }),
-			mode: 'cors',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		})
-			.then((response) => response.json())
-			.then(({ data }) => {
-				// console.log(data);
-			});
+		put(switchMacroActived + _id, actived);
 	};
 
 	const deleteMacro = () => {
