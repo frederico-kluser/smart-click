@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import Container, { ButtonGroup } from './styled';
 import toolbox from './toolbox';
+import theme from './theme';
 
 import * as Blockly from 'blockly/core';
 import 'blockly/blocks';
@@ -18,6 +19,9 @@ const BlocklyEditor = ({ initialXml }) => {
   const { workspace, xml } = useBlocklyWorkspace({
     ref: blocklyRef,
     toolboxConfiguration: toolbox, // this must be a JSON toolbox definition
+    workspaceConfiguration: {
+      theme,
+    },
     initialXml,
   });
 
