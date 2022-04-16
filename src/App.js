@@ -11,6 +11,7 @@ function App() {
 	const [loaded, setLoaded] = useState(false);
 	const [macros, setMacros] = useState([]);
 	const [screen, setScreen] = useState('useMacro');
+	const [initialXML, setInitialXML] = useState('');
 
 	const [modalConfig, setModalConfig] = useState(modalDefaultConfig);
 
@@ -41,16 +42,17 @@ function App() {
 				type
 			}));
 		});
-
 		eventEmitter.on('closeModal', () => {
 			setModalConfig((prevState) => ({ ...prevState, show: false }));
 		});
 		eventEmitter.on('conformModal', () => {
 			setModalConfig((prevState) => ({ ...prevState, show: false }));
 		});
-
 		eventEmitter.on('changePage', (page) => {
 			setScreen(page);
+		});
+		eventEmitter.on('changeXML', (xml) => {
+			setInitialXML(xml);
 		});
 	}, []);
 
@@ -64,7 +66,7 @@ function App() {
 				</Loader>
 			)}
 			{loaded && screen === 'useMacro' && <Macros data={macros} />}
-			{loaded && screen === 'createMacro' && <BlocklyEditor />}
+			{loaded && screen === 'createMacro' && <BlocklyEditor initialXML={initialXML} />}
 			{ modalConfig.show && <Modal {...modalConfig} /> }
 		</Body>
 	);

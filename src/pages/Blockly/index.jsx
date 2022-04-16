@@ -11,17 +11,18 @@ import { codeFixer } from './fixCode';
 import { DefaultButton, PrimaryButton } from '@fluentui/react';
 import eventEmitter from '../../utils/event';
 
-const BlocklyEditor = () => {
+const BlocklyEditor = (initialXml = '') => {
   const blocklyRef = useRef(null);
   const { workspace, xml } = useBlocklyWorkspace({
     ref: blocklyRef,
     toolboxConfiguration: toolbox, // this must be a JSON toolbox definition
-    initialXml: '',
+    initialXml,
   });
 
   if (xml) {
     const code = codeFixer(Blockly.Python.workspaceToCode(workspace));
-    // console.log(code);
+    console.log(code);
+    console.log(xml);
   }
 
   const cancellFunction = () => {
