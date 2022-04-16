@@ -10,8 +10,10 @@ import { useBlocklyWorkspace } from 'react-blockly';
 import { codeFixer } from './fixCode';
 import { DefaultButton, PrimaryButton } from '@fluentui/react';
 import eventEmitter from '../../utils/event';
+import { xmlSetter } from '../../utils/globalVariables';
 
-const BlocklyEditor = (initialXml = '') => {
+
+const BlocklyEditor = ({ initialXml }) => {
   const blocklyRef = useRef(null);
   const { workspace, xml } = useBlocklyWorkspace({
     ref: blocklyRef,
@@ -23,6 +25,7 @@ const BlocklyEditor = (initialXml = '') => {
     const code = codeFixer(Blockly.Python.workspaceToCode(workspace));
     console.log(code);
     console.log(xml);
+    xmlSetter(xml);
   }
 
   const cancellFunction = () => {

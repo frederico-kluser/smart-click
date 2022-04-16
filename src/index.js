@@ -4,10 +4,17 @@ import {createRoot} from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
+import { variableNameSetter } from './utils/globalVariables';
+import { windowPrompt } from './utils/nativeFunctions';
 initializeIcons();
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
+
+window.prompt = (text) => {
+  variableNameSetter(text);
+  windowPrompt();
+};
 
 root.render(
   <StrictMode>
