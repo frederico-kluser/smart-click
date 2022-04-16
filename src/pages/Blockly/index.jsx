@@ -21,6 +21,16 @@ const BlocklyEditor = ({ initialXml }) => {
     toolboxConfiguration: toolbox, // this must be a JSON toolbox definition
     workspaceConfiguration: {
       theme,
+      renderer: 'thrasos',
+      zoom: {
+        controls: true,
+        wheel: true,
+        startScale: 1.0,
+        maxScale: 3,
+        minScale: 0.3,
+        scaleSpeed: 1.2,
+        pinch: true
+      }
     },
     initialXml,
   });
