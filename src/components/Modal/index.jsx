@@ -37,7 +37,7 @@ export const modalPropertyFixer = (properties) => {
 /**
  * Open a custom modal prompt that return a promise
  * @param {object} config object with modal settings 
- * @param {number} config.title modal title
+ * @param {string} config.title modal title
  * @param {string} [config.placeholder] placeholder for input
  * @param {function} [config.confirmFunction] function to be called when confirm button is clicked
  * @param {string} [config.confirmText] text for confirm button
@@ -58,7 +58,7 @@ export const modalPrompt = async (config) => new Promise((resolve, reject) => {
 /**
  * Open a custom modal alert
  * @param {object} config object with modal settings 
- * @param {number} config.title modal title
+ * @param {string} config.title modal title
  * @param {string} config.subText modal subText
  * @param {function} [config.confirmFunction] function to be called when confirm button is clicked
  * @param {string} [config.confirmText] text for confirm button
