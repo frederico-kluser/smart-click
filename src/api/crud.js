@@ -20,6 +20,7 @@ fetch(url, {
   }),
 );
 
+// net create a function file in this folder, because i use directly this function
 export const put = (url, actived) => new Promise((resolve, reject) => {
   fetch(url, {
 			method: 'PUT',

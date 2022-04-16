@@ -4,12 +4,11 @@ import { Icon } from '@fluentui/react/lib/Icon';
 import { Text } from '@fluentui/react';
 import deleteMacroById from '../../api/deleteMacro';
 import { modalAlert, modalPrompt } from '../Modal';
-import { put } from '../../api/crud';
-import { switchMacroActived } from '../../api/urls';
+import switchMacroById from '../../api/switchMacro';
 
 const MacroItem = ({ _id, actived, name }) => {
 	const switchActived = () => {
-		put(switchMacroActived + _id, actived);
+		switchMacroById(_id, actived);
 	};
 
 	const deleteMacro = () => {
