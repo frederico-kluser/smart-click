@@ -20,6 +20,12 @@ const BlocklyEditor = ({ initialXml }) => {
     ref: blocklyRef,
     toolboxConfiguration: toolbox, // this must be a JSON toolbox definition
     workspaceConfiguration: {
+      grid: {
+        spacing: 20,
+        length: 3,
+        colour: '#ccc',
+        snap: true
+      },
       theme,
       renderer: 'thrasos',
       zoom: {
