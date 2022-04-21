@@ -88,10 +88,8 @@ import ENUMS from '../../../utils/enum';
 		const toY = block.getFieldValue('toY');
 		const mouseOptions = block.getFieldValue('mouse_options');
 		// TODO: Assemble Python into code variable.
-		const code = `findImage${imageLocalized.substring(
-			0,
-			imageLocalized.length - 1,
-		)}, { 'fromX': ${fromX}, 'fromY': ${fromY}, 'toX': ${toX}, 'toY': ${toY}, 'mouseWill': '${mouseOptions}' })`;
+		debugger;
+		const code = `findImage(${imageLocalized}, { 'fromX': ${fromX}, 'fromY': ${fromY}, 'toX': ${toX}, 'toY': ${toY}, 'mouseWill': '${mouseOptions}' })`;
 		// TODO: Change ORDER_NONE to the correct strength.
 		return [code, Blockly.Python.ORDER_NONE];
 	};
@@ -126,10 +124,7 @@ import ENUMS from '../../../utils/enum';
 		const imageLocalized = Blockly.Python.valueToCode(block, 'image_localized', Blockly.Python.ORDER_ATOMIC);
 		const mouseOptions = block.getFieldValue('mouse_options');
 		// TODO: Assemble JavaScript into code variable.
-		const code = `findImage${imageLocalized.substring(
-			0,
-			imageLocalized.length - 1,
-		)}, { 'mouseWill': '${mouseOptions}' })`;
+		const code = `findImage(${imageLocalized}, { 'mouseWill': '${mouseOptions}' })`;
 		// TODO: Change ORDER_NONE to the correct strength.
 		return [code, Blockly.Python.ORDER_NONE];
 	};
