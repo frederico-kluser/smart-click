@@ -5,7 +5,7 @@ import { variableNameGetter, xmlGetter } from "./globalVariables";
 
 export const windowPrompt = async () => {
   const xml = xmlGetter();
-  const promptText = variableNameGetter();//"Rename all 'item' variables to:";
+  const promptText = variableNameGetter('varName');//"Rename all 'item' variables to:";
 
   const variablePreviousName = getStringBetween(promptText, "'");
   const variableNextName = await modalPrompt({

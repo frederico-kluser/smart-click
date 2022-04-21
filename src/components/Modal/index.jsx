@@ -18,7 +18,7 @@ export const modalDefaultConfig = {
   placeholder: '',
 	show: false,
 	subText: '',
-	title: '',
+	title: 'Enter the new variable name',
   type: types.default,
 }
 

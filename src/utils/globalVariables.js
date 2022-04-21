@@ -4,9 +4,9 @@ export const xmlSetter = (value) => {
   xml = value;
 };
 
-let variableName = '';
-export const variableNameGetter = () => variableName;
-export const variableNameSetter = (value) => {
-  variableName = value;
+let variableName = {};
+export const variableNameGetter = (property) => variableName[property];
+export const variableNameSetter = (property, value) => {
+  variableName[property] = value;
   console.log('variableName :', variableName);
 };

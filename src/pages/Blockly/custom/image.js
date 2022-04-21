@@ -12,14 +12,19 @@ import { modalPromptImage } from '../../../components/Modal';
 				.appendField('image')
 				.appendField(new Blockly.FieldImage('NEW_URL_HERE', 15, 15, '*'));
 			this.setOnChange(async (changeEvent) => {
+				let imageURL = 'NEW_URL_HERE';
 				if (changeEvent.oldElementId === this.id && !variableNameGetter(this.id)) {
-					variableNameSetter(this.id);
-          const image = await modalPromptImage({
+          imageURL = await modalPromptImage({
             title: `Edit image`,
             subText: 'Enter new image',
             placeholder: ''
           });
-          this.svgGroup_.innerHTML = this.svgGroup_.innerHTML.replace(/NEW_URL_HERE/g, `file://${image}`);
+					variableNameSetter(this.id, imageURL);
+				} else {
+					imageURL = variableNameGetter(this.id) ? variableNameGetter(this.id) : imageURL;
+				}
+				if (imageURL !== 'NEW_URL_HERE') {
+					this.svgGroup_.innerHTML = this.svgGroup_.innerHTML.replace(/NEW_URL_HERE/g, `file://${imageURL}`);
 				}
 			});
 			this.setOutput(true, 'img');

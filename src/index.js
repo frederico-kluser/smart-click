@@ -12,7 +12,7 @@ const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 window.prompt = (text) => {
-  variableNameSetter(text);
+  variableNameSetter('varName', text);
   windowPrompt();
 };
 
