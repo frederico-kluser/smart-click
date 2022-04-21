@@ -6,7 +6,7 @@ fetch(url)
   }),
 );
 
-export const del = (url) => new Promise((resolve) =>
+export const del = (url) => new Promise((resolve, reject) =>
 fetch(url, {
   method: 'DELETE',
   mode: 'cors',
@@ -17,10 +17,11 @@ fetch(url, {
   .then((response) => response.json())
   .then(({ data }) => {
     resolve(data);
+  }).catch((err) => {
+    reject(err);
   }),
 );
 
-// net create a function file in this folder, because i use directly this function
 export const put = (url, actived) => new Promise((resolve, reject) => {
   fetch(url, {
 			method: 'PUT',
@@ -34,4 +35,19 @@ export const put = (url, actived) => new Promise((resolve, reject) => {
 			.then(({ data }) => {
         resolve(data);
 			});
+});
+
+export const post = (url, data) => new Promise((resolve, reject) => {
+  fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then(({ data }) => {
+        resolve(data);
+      });
 });

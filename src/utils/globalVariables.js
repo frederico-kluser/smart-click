@@ -8,5 +8,5 @@ let variableName = {};
 export const variableNameGetter = (property) => variableName[property];
 export const variableNameSetter = (property, value) => {
   variableName[property] = value;
-  console.log('variableName :', variableName);
+  // console.log('variableName :', variableName);
 };

@@ -11,7 +11,8 @@ import { useBlocklyWorkspace } from 'react-blockly';
 import { codeFixer } from './fixCode';
 import { DefaultButton, PrimaryButton } from '@fluentui/react';
 import eventEmitter from '../../utils/event';
-import { xmlSetter } from '../../utils/globalVariables';
+import { variableNameSetter, xmlSetter } from '../../utils/globalVariables';
+import { modalPrompt } from '../../components/Modal';
 
 
 const BlocklyEditor = ({ initialXml }) => {
@@ -43,9 +44,8 @@ const BlocklyEditor = ({ initialXml }) => {
 
   if (xml) {
     const code = codeFixer(Blockly.Python.workspaceToCode(workspace));
-    console.log(workspace);
-    console.log(code);
-    console.log(xml);
+    variableNameSetter('code', code);
+    variableNameSetter('xml', xml);
     xmlSetter(xml);
   }
 
@@ -53,11 +53,18 @@ const BlocklyEditor = ({ initialXml }) => {
     eventEmitter.emit('changePage', 'useMacro');
   }
 
+  const saveFunction = () => {
+    modalPrompt({
+      title: 'Save Macro',
+      message: 'Enter a name for your macro',
+    })
+  }
+
   return (
     <>
       <Container ref={blocklyRef} />
       <ButtonGroup>
-        <PrimaryButton text="Save" onClick={() => {}} />
+        <PrimaryButton text="Save" onClick={saveFunction} />
         <DefaultButton text="Cancell" style={{ marginLeft: 15 }} onClick={cancellFunction} />
       </ButtonGroup>
     </>
