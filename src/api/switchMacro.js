@@ -1,6 +1,6 @@
 const { put } = require("./crud");
-const { switchMacroActived } = require("./urls");
+const { switchMacroActivedURL } = require("./urls");
 
-const switchMacroById = (macroId, actived) => put(switchMacroActived + macroId, actived);
+const switchMacroById = (macroId, actived) => put(switchMacroActivedURL + macroId, actived);
 
 export default switchMacroById;

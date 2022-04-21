@@ -11,8 +11,9 @@ import { useBlocklyWorkspace } from 'react-blockly';
 import { codeFixer } from './fixCode';
 import { DefaultButton, PrimaryButton } from '@fluentui/react';
 import eventEmitter from '../../utils/event';
-import { variableNameSetter, xmlSetter } from '../../utils/globalVariables';
-import { modalPrompt } from '../../components/Modal';
+import { variableNameGetter, variableNameSetter, xmlSetter } from '../../utils/globalVariables';
+import { modalAlert, modalPrompt } from '../../components/Modal';
+import addMacro from '../../api/addMacro';
 
 
 const BlocklyEditor = ({ initialXml }) => {
@@ -53,11 +54,28 @@ const BlocklyEditor = ({ initialXml }) => {
     eventEmitter.emit('changePage', 'useMacro');
   }
 
-  const saveFunction = () => {
-    modalPrompt({
+  const saveFunction = async () => {
+    const name = await modalPrompt({
       title: 'Save Macro',
       message: 'Enter a name for your macro',
-    })
+    });
+
+    const { _id } = await addMacro({
+      name,
+      code: variableNameGetter('code'),
+      xml: variableNameGetter('xml'),
+    });
+
+    variableNameSetter('_id', _id);
+
+    const onFinish = () => eventEmitter.emit('changePage', 'useMacro');
+
+    modalAlert({
+      title: 'Macro added successfully',
+      message: `'${name}' has been added to the database`,
+      confirmFunction: onFinish,
+      cancellFunction: onFinish,
+    });
   }
 
   return (

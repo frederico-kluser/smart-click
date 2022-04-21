@@ -10,6 +10,7 @@ const Macros = ({ data }) => <>
   <PrimaryButton text="Add Macro" onClick={() => {
     variableNameSetter('code', '');
     variableNameSetter('xml', '');
+    variableNameSetter('_id', '');
     eventEmitter.emit('changePage', 'createMacro');
   }} />
 </>
