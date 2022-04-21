@@ -7,6 +7,7 @@ import eventEmitter from '../../utils/event';
 const types = {
   default: 'default',
   input: 'input',
+  image: 'image',
 }
 
 export const modalDefaultConfig = {
@@ -16,8 +17,8 @@ export const modalDefaultConfig = {
 	confirmText: 'Ok',
   placeholder: '',
 	show: false,
-	subText: 'Modal SubText',
-	title: 'Modal Title',
+	subText: '',
+	title: '',
   type: types.default,
 }
 
@@ -47,6 +48,27 @@ export const modalPropertyFixer = (properties) => {
  */
 export const modalPrompt = async (config) => new Promise((resolve, reject) => {
   eventEmitter.emit('openModal', {...config, type: types.input});
+  eventEmitter.on('closeModal', () => {
+    resolve(null);
+  });
+  eventEmitter.on('confirmModal', (data) => {
+    resolve(data);
+  });
+});
+
+/**
+ * Open a custom modal prompt that return a promise
+ * @param {object} config object with modal settings 
+ * @param {string} config.title modal title
+ * @param {string} [config.placeholder] placeholder for input
+ * @param {function} [config.confirmFunction] function to be called when confirm button is clicked
+ * @param {string} [config.confirmText] text for confirm button
+ * @param {function} [config.cancellFunction] function to be called when cancell button is clicked
+ * @param {string} [config.cancellText] text for cancell button
+ * @returns {string|null} modal html
+ */
+export const modalPromptImage = async (config) => new Promise((resolve, reject) => {
+  eventEmitter.emit('openModal', {...config, type: types.image});
   eventEmitter.on('closeModal', () => {
     resolve(null);
   });
@@ -89,7 +111,13 @@ export const Modal = ({
   }) => {
   const [inputValue, setInputValue] = React.useState('');
   const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+    let value = event.target.value;
+
+    if (type === types.image) {
+      value = event.target.files[0].path;
+    }
+    
+    setInputValue(value);
   };
 
   const dialogContentProps = {
@@ -105,7 +133,7 @@ export const Modal = ({
 
   const handlePrimaryButtonClick = () => {
     confirmFunction();
-    if (type === types.input) {
+    if (type === types.input || type === types.image) {
       eventEmitter.emit('confirmModal', inputValue);
     } else {
       eventEmitter.emit('confirmModal');
@@ -125,6 +153,7 @@ export const Modal = ({
         dialogContentProps={dialogContentProps}
       >
         { type === types.input && <TextField placeholder={placeholder} onChange={handleInputChange} /> }
+        { type === types.image && <input type="file" name="file" accept="image/png, image/gif, image/jpeg" onChange={handleInputChange} /> }
         <DialogFooter>
           <PrimaryButton onClick={handlePrimaryButtonClick} text={confirmText} />
           <DefaultButton onClick={handleSecondaryButtonClick} text={cancellText} />
