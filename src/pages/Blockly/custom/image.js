@@ -3,6 +3,7 @@ import 'blockly/blocks';
 import 'blockly/python';
 import { variableNameGetter, variableNameSetter } from '../../../utils/globalVariables';
 import { modalPromptImage } from '../../../components/Modal';
+import ENUMS from '../../../utils/enum';
 
 // image get
 (() => {
@@ -10,11 +11,11 @@ import { modalPromptImage } from '../../../components/Modal';
 		init() {
 			this.appendDummyInput()
 				.appendField('image')
-				.appendField(new Blockly.FieldImage('NEW_URL_HERE', 15, 15, '*'));
+				.appendField(new Blockly.FieldImage(ENUMS.NEW_URL_HERE, 15, 15, '*'));
 			this.setOnChange(async (changeEvent) => {
-				let imageURL = 'NEW_URL_HERE';
+				let imageURL = ENUMS.NEW_URL_HERE;
 				const imageId = variableNameGetter(this.id);
-				if (changeEvent.newElementId === this.id && (!imageId || imageId === 'NEW_URL_HERE')) {
+				if (changeEvent.newElementId === this.id && (!imageId || imageId === ENUMS.NEW_URL_HERE)) {
           imageURL = await modalPromptImage({
             title: `Edit image`,
             subText: 'Enter new image',
@@ -24,7 +25,7 @@ import { modalPromptImage } from '../../../components/Modal';
 				} else {
 					imageURL = imageId ? imageId : imageURL;
 				}
-				if (imageURL !== 'NEW_URL_HERE') {
+				if (imageURL !== ENUMS.NEW_URL_HERE) {
 					this.svgGroup_.innerHTML = this.svgGroup_.innerHTML.replace(/NEW_URL_HERE/g, `file://${imageURL}`);
 				}
 			});
