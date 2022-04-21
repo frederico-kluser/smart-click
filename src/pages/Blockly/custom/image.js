@@ -30,9 +30,8 @@ import { modalPromptImage } from '../../../components/Modal';
 	};
 
 	Blockly.Python.image_get = (block) => {
-		const imageId = block.getFieldValue('image_id');
 		// TODO: Assemble Python into code variable.
-		const code = `image_${imageId}_file`;
+		const code = `'${block.svgGroup_.getElementsByTagName('image')[0].getAttribute('xlink:href')}'`;
 		// TODO: Change ORDER_NONE to the correct strength.
 		return [code, Blockly.JavaScript.ORDER_NONE];
 	};

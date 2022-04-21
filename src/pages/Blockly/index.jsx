@@ -43,8 +43,8 @@ const BlocklyEditor = ({ initialXml }) => {
 
   if (xml) {
     const code = codeFixer(Blockly.Python.workspaceToCode(workspace));
-    // console.log(code);
-    // console.log(xml);
+    console.log(code);
+    console.log(xml);
     xmlSetter(xml);
   }
 
