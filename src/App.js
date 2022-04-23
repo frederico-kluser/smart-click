@@ -48,7 +48,8 @@ function App() {
 		eventEmitter.on('conformModal', () => {
 			setModalConfig((prevState) => ({ ...prevState, show: false }));
 		});
-		eventEmitter.on('changePage', (page) => {
+		eventEmitter.on('changePage', async (page) => {
+			await setInitialXml('');
 			setScreen(page);
 		});
 		eventEmitter.on('changeXML', async (xml) => {

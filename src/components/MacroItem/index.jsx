@@ -5,8 +5,10 @@ import { Text } from '@fluentui/react';
 import deleteMacroById from '../../api/deleteMacro';
 import { modalAlert, modalPrompt } from '../Modal';
 import switchMacroById from '../../api/switchMacro';
+import eventEmitter from '../../utils/event';
+import { variableNameSetter } from '../../utils/globalVariables';
 
-const MacroItem = ({ _id, actived, name }) => {
+const MacroItem = ({ _id, actived, name, xml, code }) => {
 	const switchActived = () => {
 		switchMacroById(_id, actived);
 	};
@@ -22,13 +24,16 @@ const MacroItem = ({ _id, actived, name }) => {
 	};
 
 	const editMacro = async () => {
-		const result = await modalPrompt({
+		modalAlert({
 			title: `Edit macro ${name}`,
 			subText: 'Enter new name',
-			placeholder: name
+			confirmFunction: () => {
+				variableNameSetter('code', code);
+				variableNameSetter('xml', xml);
+				eventEmitter.emit('changeXML', xml);
+			},
+			cancellFunction: () => {},
 		});
-
-		alert(result);
 	};
 
 	return (
